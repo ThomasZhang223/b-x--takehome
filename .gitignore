@@ -1,2 +1,7 @@
+# Ignore Python virtual environment folder
+env/
+## Ignore all PDF files recursively
+*.pdf
+**/*.pdf
 # Ignore all PDF files in the root directory
 /*.pdf
