@@ -8,9 +8,10 @@ from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
-    gemini_api_key: str = ""
-    pinecone_api_key: str = ""
-    pinecone_index_name: str = "study-planner-agents"
+    embedding_gemini_api_key: str 
+    retrieval_gemini_api_key: str
+    pinecone_api_key: str
+    pinecone_index_name: str 
 
     class Config:
         env_file = ".env"

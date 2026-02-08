@@ -1,0 +1,298 @@
+{
+  "PHYS 234": [
+    {
+      "topic_id": "phys_234_0",
+      "course": "PHYS 234",
+      "raw_name": "Foundations of Quantum Mechanics: State Vectors and Operators",
+      "keywords": [
+        "Stern-Gerlach experiment",
+        "quantum state vectors",
+        "kets and bras",
+        "basis sets",
+        "probability postulate",
+        "operators",
+        "eigenvalues and eigenvectors",
+        "matrix representation",
+        "Hermitian operators",
+        "measurement and projection",
+        "expectation value",
+        "commuting observables"
+      ],
+      "required_depth": null
+    },
+    {
+      "topic_id": "phys_234_1",
+      "course": "PHYS 234",
+      "raw_name": "Quantum Dynamics and Time Evolution",
+      "keywords": [
+        "Schr\u00f6dinger Equation",
+        "Hamiltonian operator",
+        "energy eigenstates",
+        "stationary states",
+        "time evolution recipe",
+        "spin precession",
+        "Larmor precession",
+        "Rabi oscillations"
+      ],
+      "required_depth": null
+    },
+    {
+      "topic_id": "phys_234_2",
+      "course": "PHYS 234",
+      "raw_name": "Conceptual Quantum Phenomena",
+      "keywords": [
+        "EPR Paradox",
+        "entanglement",
+        "non-local correlations",
+        "Schr\u00f6dinger\u2019s Cat paradox",
+        "macroscopic superposition",
+        "wave function collapse",
+        "decoherence",
+        "hidden variables"
+      ],
+      "required_depth": null
+    },
+    {
+      "topic_id": "phys_234_3",
+      "course": "PHYS 234",
+      "raw_name": "Wave Mechanics: Bounded Potential Problems",
+      "keywords": [
+        "wave function",
+        "position representation",
+        "probability density",
+        "normalization",
+        "infinite square well",
+        "finite square well",
+        "barrier penetration",
+        "quantized energies",
+        "nodes"
+      ],
+      "required_depth": null
+    },
+    {
+      "topic_id": "phys_234_4",
+      "course": "PHYS 234",
+      "raw_name": "Wave Mechanics: Unbound States and Uncertainty",
+      "keywords": [
+        "free particle eigenstates",
+        "momentum eigenstates",
+        "de Broglie wavelength",
+        "momentum space wave function",
+        "Fourier transform",
+        "wave packets",
+        "group velocity",
+        "phase velocity",
+        "Heisenberg Uncertainty Principle"
+      ],
+      "required_depth": null
+    }
+  ],
+  "SYSD 300": [
+    {
+      "topic_id": "sysd_300_0",
+      "course": "SYSD 300",
+      "raw_name": "Foundational Concepts of Systems Dynamics",
+      "keywords": [
+        "Policy Resistance",
+        "Feedback loops",
+        "Single-loop learning",
+        "Double-loop learning",
+        "Dynamic complexity",
+        "SD Worldview",
+        "Attribution error",
+        "Mental models"
+      ],
+      "required_depth": null
+    },
+    {
+      "topic_id": "sysd_300_1",
+      "course": "SYSD 300",
+      "raw_name": "The Systems Dynamics Modelling Process",
+      "keywords": [
+        "Problem articulation",
+        "Dynamic hypothesis",
+        "Simulation model",
+        "Policy design",
+        "Reference modes",
+        "Endogenous variables",
+        "Exogenous variables",
+        "Iterative process"
+      ],
+      "required_depth": null
+    },
+    {
+      "topic_id": "sysd_300_2",
+      "course": "SYSD 300",
+      "raw_name": "System Structure and Dynamic Behaviors",
+      "keywords": [
+        "Structure-behavior link",
+        "Positive feedback",
+        "Negative feedback",
+        "Exponential growth",
+        "Goal seeking",
+        "Oscillation",
+        "S-shaped growth",
+        "Overshoot and collapse"
+      ],
+      "required_depth": null
+    },
+    {
+      "topic_id": "sysd_300_3",
+      "course": "SYSD 300",
+      "raw_name": "Causal Loop Diagramming (CLDs)",
+      "keywords": [
+        "Causal link",
+        "Polarity signs",
+        "Loop polarity",
+        "Reinforcing loop (R)",
+        "Balancing loop (B)",
+        "Time delay",
+        "Causation vs. Correlation",
+        "Ceteris paribus"
+      ],
+      "required_depth": null
+    },
+    {
+      "topic_id": "sysd_300_4",
+      "course": "SYSD 300",
+      "raw_name": "Stock and Flow Structures",
+      "keywords": [
+        "Stock",
+        "Flow",
+        "Accumulation",
+        "Rate",
+        "Dimensional consistency",
+        "Snapshot test",
+        "Conservation of material",
+        "Model boundary",
+        "Disequilibrium"
+      ],
+      "required_depth": null
+    },
+    {
+      "topic_id": "sysd_300_5",
+      "course": "SYSD 300",
+      "raw_name": "Dynamics of Stocks and Flows",
+      "keywords": [
+        "Integration",
+        "Differentiation",
+        "Net flow",
+        "Graphical integration",
+        "Graphical differentiation",
+        "Delays",
+        "Stock trajectory",
+        "Rate of change"
+      ],
+      "required_depth": null
+    },
+    {
+      "topic_id": "sysd_300_6",
+      "course": "SYSD 300",
+      "raw_name": "First-Order System Dynamics",
+      "keywords": [
+        "First-order system",
+        "Doubling Time",
+        "Rule of 70",
+        "Half-Life",
+        "Adjustment time",
+        "Phase plot",
+        "Equilibrium point",
+        "S-shaped growth",
+        "Carrying capacity",
+        "Oscillation constraint"
+      ],
+      "required_depth": null
+    }
+  ],
+  "HLTH 204": [
+    {
+      "topic_id": "hlth_204_0",
+      "course": "HLTH 204",
+      "raw_name": "Introduction to Statistical Concepts and Study Design",
+      "keywords": [
+        "Population",
+        "Sample",
+        "Parameter",
+        "Statistic",
+        "Data types",
+        "Measurement levels",
+        "Sampling techniques",
+        "Experiment",
+        "Observational study",
+        "Randomization"
+      ],
+      "required_depth": null
+    },
+    {
+      "topic_id": "hlth_204_1",
+      "course": "HLTH 204",
+      "raw_name": "Data Visualization and Exploratory Analysis",
+      "keywords": [
+        "Frequency distributions",
+        "Histograms",
+        "Relative frequency",
+        "Distribution shape",
+        "Outliers",
+        "Dotplots",
+        "Bar graphs",
+        "Pie charts",
+        "Scatterplots",
+        "Deceptive graphs"
+      ],
+      "required_depth": null
+    },
+    {
+      "topic_id": "hlth_204_2",
+      "course": "HLTH 204",
+      "raw_name": "Descriptive Statistics: Measures of Center, Variation, and Relative Standing",
+      "keywords": [
+        "Mean",
+        "Median",
+        "Mode",
+        "Standard Deviation",
+        "Variance",
+        "Range",
+        "z-Score",
+        "Percentiles",
+        "Quartiles",
+        "Boxplots"
+      ],
+      "required_depth": null
+    },
+    {
+      "topic_id": "hlth_204_3",
+      "course": "HLTH 204",
+      "raw_name": "Probability Theory and Risk Measurement",
+      "keywords": [
+        "Relative Frequency probability",
+        "Classical probability",
+        "Conditional Probability",
+        "Addition Rule",
+        "Multiplication Rule",
+        "Independent events",
+        "Dependent events",
+        "Relative Risk",
+        "Odds Ratio",
+        "Permutations",
+        "Combinations"
+      ],
+      "required_depth": null
+    },
+    {
+      "topic_id": "hlth_204_4",
+      "course": "HLTH 204",
+      "raw_name": "Discrete Probability Distributions",
+      "keywords": [
+        "Random Variable",
+        "Probability Distribution",
+        "Expected Value",
+        "Binomial Distribution",
+        "Poisson Distribution",
+        "Binomial probabilities",
+        "Mean (discrete)",
+        "Standard Deviation (discrete)"
+      ],
+      "required_depth": null
+    }
+  ]
+}

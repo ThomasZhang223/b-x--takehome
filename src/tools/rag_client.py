@@ -3,3 +3,83 @@ RAG client tool for retrieval-augmented generation.
 
 Provides interface for querying the vector database and retrieving relevant context.
 """
+
+import json
+import logging
+import re
+
+from pinecone import Pinecone
+
+from src.config import settings
+from src.ingestion.embedder import embed_query
+from src.models.schema import ParentChunk, RetrievedContext, TopicNode
+
+logger = logging.getLogger(__name__)
+
+
+class RAGClient:
+    def __init__(self):
+        pc = Pinecone(api_key=settings.pinecone_api_key)
+        self.index = pc.Index(settings.pinecone_index_name)
+
+        with open("data/processed/parents.json") as f:
+            parents_data = json.load(f)
+
+        self.parents_dict: dict[str, ParentChunk] = {
+            p["parent_id"]: ParentChunk(**p) for p in parents_data
+        }
+
+        logger.info(f"RAGClient initialized with {len(self.parents_dict)} parent chunks")
+
+    def query(self, query_text: str, top_k: int = 5) -> list[RetrievedContext]:
+        #Query Pinecone and return retrieved contexts with parent text.
+        
+        embedding = embed_query(query_text)
+
+        results = self.index.query(
+            vector=embedding,
+            top_k=top_k,
+            include_metadata=True,
+        )
+
+        contexts = []
+        seen_parents = set()
+
+        for match in results["matches"]:
+            parent_id = match["metadata"]["parent_id"]
+
+            if parent_id in seen_parents:
+                continue
+            seen_parents.add(parent_id)
+
+            parent = self.parents_dict.get(parent_id)
+            if not parent:
+                continue
+
+            parent_text = parent.text
+            # comprehensive regex to check for any latex for formulas
+            has_formula = bool(
+                re.search(r'(\\[a-zA-Z]+|\\[\^_{}]|\$.*?\$|\\\[.*?\\\]|\\\(.*?\\\)|\\\[\\\[.*?\\\]\]|\\{.*?\\})', parent_text)
+            )
+
+            contexts.append(RetrievedContext(
+                topic_id="",
+                parent_chunk_text=parent_text,
+                source_file=match["metadata"]["source_file"],
+                source_page=match["metadata"]["page_number"],
+                contains_formula=has_formula,
+            ))
+
+        return contexts
+
+    def query_for_topic(self, topic: TopicNode, top_k: int = 5) -> list[RetrievedContext]:
+        #Query for a specific topic and set topic_id on results 
+        # used for second user interaction
+        
+        query_string = f"{topic.raw_name} {' '.join(topic.keywords)}"
+        contexts = self.query(query_string, top_k)
+
+        for ctx in contexts:
+            ctx.topic_id = topic.topic_id
+
+        return contexts
