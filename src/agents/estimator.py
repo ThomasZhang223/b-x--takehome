@@ -121,7 +121,7 @@ Rules:
             formula_count = sum(1 for c in topic_ctxs if c.get("contains_formula", False))
             formula_multiplier = 1.0 + (0.5 * formula_count / max(chunk_count, 1))
 
-            total_minutes = int(chunk_count * base_minutes_per_chunk * formula_multiplier * 30)
+            total_minutes = int(chunk_count * base_minutes_per_chunk * formula_multiplier)
             total_minutes = max(total_minutes, 30)  
 
             estimates[topic.topic_id] = {
