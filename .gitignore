@@ -1,7 +1,8 @@
+# Ignore .env but not .env.example
+.env
+!.env.example
 # Ignore Python virtual environment folder
 env/
 ## Ignore all PDF files recursively
 *.pdf
 **/*.pdf
-# Ignore all PDF files in the root directory
-/*.pdf

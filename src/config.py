@@ -1,0 +1,23 @@
+"""
+Configuration settings for the study planner.
+"""
+
+from functools import lru_cache
+
+from pydantic_settings import BaseSettings
+
+
+class Settings(BaseSettings):
+    gemini_api_key: str = ""
+    pinecone_api_key: str = ""
+    pinecone_index_name: str = "study-planner-agents"
+
+    class Config:
+        env_file = ".env"
+
+
+@lru_cache
+def get_settings() -> Settings:
+    return Settings()
+
+settings = get_settings()
