@@ -144,10 +144,11 @@ def main():
             "parent_id": chunk.parent_id,
             "source_file": chunk.source_file,
             "page_number": chunk.page_number,
-            "text": chunk.text[:500],
+            "text": chunk.text[:500], # not full text, metadata text for preview purposes only
         })
 
     #upload to pinecone - detect dimension from embeddings
+    # Gemini embeddings 001 defaults 3072 dimensions
     dimension = len(embeddings[0]) if embeddings else 3072
     index = get_or_create_index(dimension=dimension)
     upsert_vectors(index, child_ids, embeddings, metadata)

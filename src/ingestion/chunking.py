@@ -102,6 +102,7 @@ def create_parent_chunks(
                     current_text = paragraph
                     current_page = page["page_number"]
 
+    # account for the last chunk
     if current_text.strip():
         parents.append(ParentChunk(
             parent_id=str(uuid.uuid4()),

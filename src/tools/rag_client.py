@@ -31,7 +31,7 @@ class RAGClient:
 
         logger.info(f"RAGClient initialized with {len(self.parents_dict)} parent chunks")
 
-    def query(self, query_text: str, top_k: int = 5) -> list[RetrievedContext]:
+    def query(self, query_text: str, top_k: int = 8) -> list[RetrievedContext]:
         #Query Pinecone and return retrieved contexts with parent text.
         
         embedding = embed_query(query_text)
@@ -48,6 +48,7 @@ class RAGClient:
         for match in results["matches"]:
             parent_id = match["metadata"]["parent_id"]
 
+            # avoid repeated parent chunks
             if parent_id in seen_parents:
                 continue
             seen_parents.add(parent_id)
