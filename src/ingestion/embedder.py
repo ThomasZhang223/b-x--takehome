@@ -16,10 +16,10 @@ from src.config import settings
 
 logger = logging.getLogger(__name__)
 
-client = genai.Client(api_key=settings.embedding_gemini_api_key)
+client = genai.Client(api_key=settings.retrieval_gemini_api_key)
 
 
-def embed_texts(texts: list[str], batch_size: int = 250) -> list[list[float]]:
+def embed_texts(texts: list[str], batch_size: int = 15) -> list[list[float]]:
 
     all_embeddings = []
     total_batches = (len(texts) + batch_size - 1) // batch_size
@@ -32,7 +32,7 @@ def embed_texts(texts: list[str], batch_size: int = 250) -> list[list[float]]:
 
         logger.info(f"Embedding batch {batch_num}/{total_batches} ({len(texts)} total chunks)")
 
-        backoff = 5
+        backoff = 10
         max_backoff = 60
 
         while True: # retry logic to wait for RPM
@@ -51,7 +51,7 @@ def embed_texts(texts: list[str], batch_size: int = 250) -> list[list[float]]:
                 else:
                     raise
 
-        time.sleep(1)
+        time.sleep(10)  # Wait 10s between batches to stay under 100 RPM
 
     return all_embeddings
 

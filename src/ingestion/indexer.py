@@ -18,8 +18,9 @@ from src.models.schema import ChildChunk, ParentChunk
 logger = logging.getLogger(__name__)
 
 
-def get_or_create_index(index_name: str | None = None, dimension: int = 768):
+def get_or_create_index(index_name: str | None = None, dimension: int = 3072):
     #get existing pinecone index or create a new one
+    #gemini-embedding-001 outputs 3072 dimensions by default
 
     if index_name is None:
         index_name = settings.pinecone_index_name
@@ -146,8 +147,9 @@ def main():
             "text": chunk.text[:500],
         })
 
-    #upload to pinecone
-    index = get_or_create_index()
+    #upload to pinecone - detect dimension from embeddings
+    dimension = len(embeddings[0]) if embeddings else 3072
+    index = get_or_create_index(dimension=dimension)
     upsert_vectors(index, child_ids, embeddings, metadata)
 
     print(f"\nUploaded {len(embeddings)} vectors to Pinecone index: {settings.pinecone_index_name}")
