@@ -33,7 +33,7 @@ TEXTBOOK_PREFIXES = {
 }
 
 #chunk sizes - larger chunks = fewer embeddings = less api calls
-PARENT_CHUNK_SIZE = 120000
+PARENT_CHUNK_SIZE = 12000
 CHILD_CHUNK_SIZE = 3000
 CHILD_OVERLAP = 500
 

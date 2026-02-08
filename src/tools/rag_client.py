@@ -31,24 +31,45 @@ class RAGClient:
 
         logger.info(f"RAGClient initialized with {len(self.parents_dict)} parent chunks")
 
-    def query(self, query_text: str, top_k: int = 8) -> list[RetrievedContext]:
+    def query(
+        self,
+        query_text: str,
+        top_k: int = 8,
+        exclude_ids: set[str] | None = None,
+        exclude_parent_ids: set[str] | None = None,
+    ) -> tuple[list[RetrievedContext], list[str], list[str]]:
         #Query Pinecone and return retrieved contexts with parent text.
-        
+        #Returns (contexts, new_chunk_ids, new_parent_ids) tuple.
+
+        exclude_ids = exclude_ids or set()
+        exclude_parent_ids = exclude_parent_ids or set()
+
+        #fetch extra to account for filtering
+        fetch_k = top_k * 3 if (exclude_ids or exclude_parent_ids) else top_k
+
         embedding = embed_query(query_text)
 
         results = self.index.query(
             vector=embedding,
-            top_k=top_k,
+            top_k=fetch_k,
             include_metadata=True,
         )
 
         contexts = []
-        seen_parents = set()
+        new_chunk_ids = []
+        new_parent_ids = []
+        seen_parents = set(exclude_parent_ids)  #start with already-excluded parents
 
         for match in results["matches"]:
+            child_id = match["id"]
             parent_id = match["metadata"]["parent_id"]
+            score = match.get("score", 0.0)
 
-            # avoid repeated parent chunks
+            #skip if child already retrieved
+            if child_id in exclude_ids:
+                continue
+
+            #skip if parent already retrieved (avoid duplicate content)
             if parent_id in seen_parents:
                 continue
             seen_parents.add(parent_id)
@@ -65,22 +86,39 @@ class RAGClient:
 
             contexts.append(RetrievedContext(
                 topic_id="",
+                parent_chunk_id=parent_id,
+                child_chunk_id=child_id,
                 parent_chunk_text=parent_text,
                 source_file=match["metadata"]["source_file"],
                 source_page=match["metadata"]["page_number"],
+                relevance_score=score,
                 contains_formula=has_formula,
             ))
+            new_chunk_ids.append(child_id)
+            new_parent_ids.append(parent_id)
 
-        return contexts
+            #stop once we have enough
+            if len(contexts) >= top_k:
+                break
 
-    def query_for_topic(self, topic: TopicNode, top_k: int = 5) -> list[RetrievedContext]:
-        #Query for a specific topic and set topic_id on results 
-        # used for second user interaction
-        
+        return contexts, new_chunk_ids, new_parent_ids
+
+    def query_for_topic(
+        self,
+        topic: TopicNode,
+        top_k: int = 5,
+        exclude_ids: set[str] | None = None,
+        exclude_parent_ids: set[str] | None = None,
+    ) -> tuple[list[RetrievedContext], list[str], list[str]]:
+        #Query for a specific topic and set topic_id on results
+        #Returns (contexts, new_chunk_ids, new_parent_ids) tuple.
+
         query_string = f"{topic.raw_name} {' '.join(topic.keywords)}"
-        contexts = self.query(query_string, top_k)
+        contexts, new_chunk_ids, new_parent_ids = self.query(
+            query_string, top_k, exclude_ids, exclude_parent_ids
+        )
 
         for ctx in contexts:
             ctx.topic_id = topic.topic_id
 
-        return contexts
+        return contexts, new_chunk_ids, new_parent_ids

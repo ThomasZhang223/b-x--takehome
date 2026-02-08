@@ -18,6 +18,9 @@ logger = logging.getLogger(__name__)
 
 client = genai.Client(api_key=settings.retrieval_gemini_api_key)
 
+#in-memory cache for query embeddings to avoid re-embedding during runtime
+_query_embedding_cache: dict[str, list[float]] = {}
+
 
 def embed_texts(texts: list[str], batch_size: int = 15) -> list[list[float]]:
 
@@ -25,7 +28,7 @@ def embed_texts(texts: list[str], batch_size: int = 15) -> list[list[float]]:
     total_batches = (len(texts) + batch_size - 1) // batch_size
 
     for i in range(0, len(texts), batch_size):
-        # batching chunks but that doesn't even work for gemini
+        # batching chunks but that doesn't even work for reducing gemini rate limits
         # gemini calculates on api call per chunk embedded
         batch = texts[i : i + batch_size]
         batch_num = i // batch_size + 1
@@ -57,13 +60,33 @@ def embed_texts(texts: list[str], batch_size: int = 15) -> list[list[float]]:
 
 
 def embed_query(query: str) -> list[float]:
-    # Embed single query for retrieval
+    #embed single query for retrieval, with caching
+
+    #check cache first
+    if query in _query_embedding_cache:
+        logger.debug(f"Cache hit for query: {query[:50]}...")
+        return _query_embedding_cache[query]
 
     result = client.models.embed_content(
         model="gemini-embedding-001",
         contents=query,
     )
-    return result.embeddings[0].values
+    embedding = result.embeddings[0].values
+
+    #cache the result
+    _query_embedding_cache[query] = embedding
+    return embedding
+
+
+def get_query_cache() -> dict[str, list[float]]:
+    #return the query embedding cache for persistence
+    return _query_embedding_cache
+
+
+def load_query_cache(cache: dict[str, list[float]]) -> None:
+    #load query embedding cache from session state
+    global _query_embedding_cache
+    _query_embedding_cache.update(cache)
 
 
 def save_embeddings(

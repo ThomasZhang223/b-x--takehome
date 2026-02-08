@@ -70,38 +70,6 @@ def upsert_vectors(
         index.upsert(vectors=batch)
         logger.info(f"Upserted batch {batch_num}/{total_batches}")
 
-
-def upsert_chunks(
-    index,
-    child_chunks: list[ChildChunk],
-    embeddings: list[list[float]],
-    batch_size: int = 100,
-):
-    #upsert child chunks with embeddings to pinecone
-
-    vectors = []
-    for chunk, embedding in zip(child_chunks, embeddings):
-        vectors.append((
-            chunk.child_id,
-            embedding,
-            {
-                "parent_id": chunk.parent_id,
-                "source_file": chunk.source_file,
-                "page_number": chunk.page_number,
-                "text": chunk.text[:500],
-            },
-        ))
-
-    total_batches = (len(vectors) + batch_size - 1) // batch_size
-
-    for i in range(0, len(vectors), batch_size):
-        batch = vectors[i : i + batch_size]
-        batch_num = i // batch_size + 1
-
-        index.upsert(vectors=batch)
-        logger.info(f"Upserted batch {batch_num}/{total_batches}")
-
-
 def save_parent_chunks(
     parents: list[ParentChunk],
     output_path: str = "data/processed/parents.json",
