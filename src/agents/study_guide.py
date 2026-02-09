@@ -57,7 +57,7 @@ class StudyGuideAgent(BaseAgent):
     def __init__(self):
         super().__init__(name="StudyGuideAgent")
         self.logger = logging.getLogger("agent.StudyGuide")
-        self.client = genai.Client(api_key=settings.retrieval_gemini_api_key)
+        self.client = genai.Client(api_key=settings.embedding_gemini_api_key)
 
     async def _run_async_impl(self, ctx: InvocationContext) -> AsyncGenerator:
         topics = [TopicNode(**t) for t in ctx.session.state.get("topics", [])]
