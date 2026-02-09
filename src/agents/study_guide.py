@@ -110,6 +110,7 @@ OUTPUT: Return a JSON object matching the requested schema.
                     config={
                         "response_mime_type": "application/json",
                         "response_schema": StudyGuideContent,
+                    },
                 )
                 
                 content = StudyGuideContent.model_validate_json(response.text)
