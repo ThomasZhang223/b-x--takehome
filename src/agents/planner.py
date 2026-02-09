@@ -50,7 +50,7 @@ class PlannerAgent(BaseAgent):
             -sb.duration_minutes
         ))
 
-        #bin-packing into daily 4-hour slots
+        #bin-packing into daily 8-hour slots
         schedule = {}  #date_str -> [StudyBlock]
 
         for block in sorted_blocks:
@@ -67,7 +67,7 @@ class PlannerAgent(BaseAgent):
                 day_blocks = schedule.get(date_str, [])
                 day_total = sum(b.duration_minutes for b in day_blocks)
 
-                if day_total + block.duration_minutes <= 240:  #4 hour cap
+                if day_total + block.duration_minutes <= 480:  
                     block.date = date_str
                     schedule.setdefault(date_str, []).append(block)
                     assigned = True

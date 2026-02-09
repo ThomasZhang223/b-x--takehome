@@ -102,23 +102,3 @@ class RAGClient:
                 break
 
         return contexts, new_chunk_ids, new_parent_ids
-
-    def query_for_topic(
-        self,
-        topic: TopicNode,
-        top_k: int = 5,
-        exclude_ids: set[str] | None = None,
-        exclude_parent_ids: set[str] | None = None,
-    ) -> tuple[list[RetrievedContext], list[str], list[str]]:
-        #Query for a specific topic and set topic_id on results
-        #Returns (contexts, new_chunk_ids, new_parent_ids) tuple.
-
-        query_string = f"{topic.raw_name} {' '.join(topic.keywords)}"
-        contexts, new_chunk_ids, new_parent_ids = self.query(
-            query_string, top_k, exclude_ids, exclude_parent_ids
-        )
-
-        for ctx in contexts:
-            ctx.topic_id = topic.topic_id
-
-        return contexts, new_chunk_ids, new_parent_ids

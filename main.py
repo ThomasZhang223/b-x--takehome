@@ -21,6 +21,7 @@ from src.agents.estimator import EstimatorAgent
 from src.agents.planner import PlannerAgent
 from src.agents.researcher import ResearcherAgent
 from src.agents.validator import ValidatorAgent
+from src.agents.study_guide import StudyGuideAgent
 from src.config import settings
 
 #set API key for ADK/Gemini
@@ -39,6 +40,7 @@ researcher_agent = ResearcherAgent()
 validator_agent = ValidatorAgent()
 estimator_agent = EstimatorAgent()
 planner_agent = PlannerAgent()
+study_guide_agent = StudyGuideAgent()
 
 #generator-critic loop: Researcher generates, Validator critiques
 #LoopAgent runs sub_agents sequentially, repeats until escalate=True or max_iterations
@@ -49,14 +51,15 @@ research_validation_loop = LoopAgent(
 )
 
 #main sequential pipeline
-#follows the pattern: Config (HITL1) -> Research+Validate (Generator-Critic) -> Estimate (HITL2) -> Plan
+#follows the pattern: Config (HITL1) -> Research+Validate (Generator-Critic) -> Estimate (HITL2) -> Plan -> Generate Guide
 study_planner_pipeline = SequentialAgent(
     name="StudyPlannerPipeline",
     sub_agents=[
         orchestrator_agent,        #HITL 1: User configuration
         research_validation_loop,  #Generator-Critic: Retrieve & validate
         estimator_agent,           #HITL 2: Time estimation & user review
-        planner_agent,             #Output: Generate study_plan.md
+        planner_agent,             #Output: Generate study_plan.md schedule
+        study_guide_agent,         #Output: Generate full study guide content
     ],
     description="Multi-agent study planner: sequential pipeline with generator-critic loop and human-in-the-loop checkpoints.",
 )
