@@ -16,7 +16,7 @@ from src.config import settings
 
 logger = logging.getLogger(__name__)
 
-client = genai.Client(api_key=settings.retrieval_gemini_api_key)
+client = genai.Client(api_key=settings.embedding_gemini_api_key)
 
 #in-memory cache for query embeddings to avoid re-embedding during runtime
 _query_embedding_cache: dict[str, list[float]] = {}

@@ -6,3 +6,4 @@ env/
 ## Ignore all PDF files recursively
 *.pdf
 **/*.pdf
+*.md

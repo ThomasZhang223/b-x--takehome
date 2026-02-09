@@ -45,7 +45,7 @@ class OrchestratorAgent(BaseAgent):
     def __init__(self):
         super().__init__(name="OrchestratorAgent")
         self.logger = logging.getLogger("agent.OrchestratorAgent")
-        self.client = genai.Client(api_key=settings.retrieval_gemini_api_key)
+        self.client = genai.Client(api_key=settings.embedding_gemini_api_key)
 
     def _parse_intent(self, user_input: str, courses: list[str], current_configs: dict) -> ParsedConfigIntent:
         """Use LLM to parse natural language input into structured intent."""

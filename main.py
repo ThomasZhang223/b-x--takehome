@@ -25,7 +25,7 @@ from src.agents.study_guide import StudyGuideAgent
 from src.config import settings
 
 #set API key for ADK/Gemini
-os.environ["GOOGLE_API_KEY"] = settings.retrieval_gemini_api_key
+os.environ["GOOGLE_API_KEY"] = settings.embedding_gemini_api_key
 
 logging.basicConfig(level=logging.INFO, format="%(name)s | %(message)s")
 
