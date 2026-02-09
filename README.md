@@ -93,7 +93,3 @@ python main.py
 - **Generator-Critic Loop**: Automatic retry for low-coverage topics
 
 ---
-
-## Documentation
-
-For complete technical details, see [`multi_agent_rag_explained.md`](./multi_agent_rag_explained.md).
